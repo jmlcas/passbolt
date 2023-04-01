@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    restart: unless-stopped
+    tty: true    
+    depends_on:
+      - db
+    environment:
+      APP_FULL_BASE_URL: http://localhost   #https://passbolt.local
+      DATASOURCES_DEFAULT_HOST: "db"
+      DATASOURCES_DEFAULT_USERNAME: "passbolt"
+      DATASOURCES_DEFAULT_PASSWORD: "P4ssb0lt"
+      DATASOURCES_DEFAULT_DATABASE: "passbolt"
+      DATASOURCES_DEFAULT_PORT: "3306"
+      DATASOURCES_QUOTE_IDENTIFIER: "true"     
+    volumes:
+      - gpg_volume:/etc/passbolt/gpg
+      - jwt_volume:/etc/passbolt/jwt
+    command: ["/usr/bin/wait-for.sh", "-t", "0", "db:3306", "--", "/docker-entrypoint.sh"]
+    ports:
+      - "8200:80"
+      - "8443:443"
+
+  db:
+    image: mariadb:10.3
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "P4ssb0lt"
+      MYSQL_DATABASE: "passbolt"
+      MYSQL_USER: "passbolt"
+      MYSQL_PASSWORD: "P4ssb0lt"
+    volumes:
+      - database_volume:/var/lib/mysql
+
+volumes:
+  gpg_volume:
+  jwt_volume:
+  database_volume:      
+
+      
