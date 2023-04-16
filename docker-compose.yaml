@@ -4,6 +4,7 @@ services:
 
   passbolt:
     image: passbolt/passbolt:latest-ce
+    container_name: passbolt
     restart: unless-stopped
     tty: true    
     depends_on:
