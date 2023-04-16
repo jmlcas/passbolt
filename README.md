@@ -10,4 +10,8 @@ $ docker exec passbolt su -m -c "bin/cake passbolt register_user -u your@email.c
 
 Este comando de registro devolverá una URL de un solo uso necesaria para continuar con la configuración del navegador web y finalizar el registro. 
 
-Su instancia de passbolt debería estar disponible
+Se te pedirá que instales la extensión syspass de chrome. 
+
+Tu instancia de passbolt debería ya estar disponible.
+
+NOTA: en algún navegador da problemas, preferible usar los basados en chrome ó Firefox.
